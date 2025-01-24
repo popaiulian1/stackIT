@@ -46,22 +46,24 @@ bool Board::IsFreeBlock(uint8_t pX, uint8_t pY) const
 bool Board::IsPossibleMovement(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t pRotation) const
 {
 	// Check collision with pieces already stored in the board or the board limits
-	for (size_t i = pX, x = 0; i < pX + BoardInfo::PIECE_BLOCKS; i++, x++)
+	for (size_t i = 0; i < BoardInfo::PIECE_BLOCKS; ++i)
 	{
-		for (size_t j = pY, y = 0; j < pY + BoardInfo::PIECE_BLOCKS; j++, y++)
+		for (size_t j = 0; j < BoardInfo::PIECE_BLOCKS; ++j)
 		{
-			// Check if the piece is outside the limits of the board
-			if (i < 0 || i > BoardInfo::BOARD_WIDTH - 1 || j > BoardInfo::BOARD_HEIGHT - 1)
+			int blockType = Pieces::GetBlockType(pPiece, pRotation, i, j);
+			if (blockType != 0)
 			{
-				if (Pieces::GetBlockType(pPiece, pRotation, x, y) != 0)
+				int newX = pX + i;
+				int newY = pY + j;
+
+				// Check if the piece is outside the limits of the board
+				if (newX < 0 || newX >= BoardInfo::BOARD_WIDTH || newY >= BoardInfo::BOARD_HEIGHT)
 				{
 					return false;
 				}
-			}
-			// Check if the piece have collisioned with a block already stored in the map
-			if (j >= 0)
-			{
-				if (Pieces::GetBlockType(pPiece, pRotation, x, y) != 0 && !IsFreeBlock(i, j))
+
+				// Check if the piece has collided with a block already stored in the board
+				if (newY >= 0 && !IsFreeBlock(newX, newY))
 				{
 					return false;
 				}
@@ -73,13 +75,14 @@ bool Board::IsPossibleMovement(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t p
 
 void Board::StorePiece(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t pRotation)
 {
-	for (size_t i = pX, x = 0; i < pX + BoardInfo::PIECE_BLOCKS; i++, x++)
+	for (size_t i = 0; i < BoardInfo::PIECE_BLOCKS; ++i)
 	{
-		for (size_t j = pY, y = 0; j < pY + BoardInfo::PIECE_BLOCKS; j++, y++)
+		for (size_t j = 0; j < BoardInfo::PIECE_BLOCKS; ++j)
 		{
-			if (Pieces::GetBlockType(pPiece, pRotation, x, y) != 0)
+			int blockType = Pieces::GetBlockType(pPiece, pRotation, i, j);
+			if (blockType != 0)
 			{
-				mBoard[i][j] = static_cast<int>(BoardInfo::PosStatus::POS_FILLED);
+				mBoard[pX + i][pY + j] = blockType;
 			}
 		}
 	}

@@ -24,7 +24,7 @@ void IO::DrawRectangle(int pX1, int pY1, int pX2, int pY2, IUtils::Color pColor)
 
 void IO::ClearScreen()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 }
 
@@ -50,6 +50,27 @@ int8_t IO::InitGraph()
 	}
 
 	glfwMakeContextCurrent(mWindow);
+
+	glewExperimental = GL_TRUE;
+	if (glewInit() != GLEW_OK)
+	{
+		std::cerr << "Failed to initialize GLEW" << std::endl;
+		return -1;
+	}
+
+	glViewport(0, 0, mScreenWidth, mScreenHeight);
+
+	// Set up the projection matrix
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, mScreenWidth, mScreenHeight, 0, -1, 1);
+
+	// Set up the modelview matrix
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	std::cout << "OpenGL version: " << glGetString(GL_VERSION) << " initialized" << std::endl;
+
 	return 0;
 }
 

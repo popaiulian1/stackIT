@@ -5,8 +5,8 @@
 namespace BoardInfo {
 
 	// Board constants
-	constexpr uint8_t BOARD_WIDTH = 10; // board width in blocks
-	constexpr uint8_t BOARD_HEIGHT = 20; // board height in blocks
+	constexpr uint8_t BOARD_WIDTH = 90; // board width in blocks
+	constexpr uint8_t BOARD_HEIGHT = 90; // board height in blocks
 	constexpr uint8_t BLOCK_SIZE = 16; // size of the blocks of the pieces (width & height)
 	constexpr uint8_t BOARD_LINE_WIDTH = 6; // size of the board frame
 	constexpr uint8_t BOARD_POSITION = 320; // center pos from left side of the screen

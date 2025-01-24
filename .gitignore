@@ -4,8 +4,10 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 # Allow glfw files
-!thirdparty/GLFW/
-!thirdparty/GLFW/**/*
+!thirdparty/GLFW/x64/**/*.lib
+!thirdparty/GLFW/x64/**/*.dll
+!thirdparty/GLFW/x86/**/*.lib
+!thirdparty/GLFW/x86/**/*.dll
 
 # User-specific files
 *.rsuser

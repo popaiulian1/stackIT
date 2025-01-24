@@ -7,8 +7,8 @@ GLEW
 GLFW  
 
 # Keys:  
-"Q" -> drop piece to bottom
-"R" -> rotate piece
-"A" -> move piece to left
-"D" -> move piece to right
-"S" -> move piece down
+"Q" -> drop piece to bottom  
+"R" -> rotate piece  
+"A" -> move piece to left  
+"D" -> move piece to right  
+"S" -> move piece down  

@@ -14,7 +14,7 @@ namespace BoardInfo {
 	constexpr uint8_t MIN_HORIZONTAL_MARGIN = 20; // minimum horizontal margin for the board limit
 	constexpr uint8_t PIECE_BLOCKS = 5; // number of horizontal and vertical blocks of a matrix piece
 
-	enum class PosStatus {
+	static enum class PosStatus {
 		POS_FREE, // free position
 		POS_FILLED, // filled position
 	};

@@ -1,6 +1,6 @@
 #include "Board.h"
 
-void stackIT::Board::InitBoard()
+void Board::InitBoard()
 {
 	for (int i = 0; i < BoardInfo::BOARD_WIDTH; i++) {
 		for (int j = 0; j < BoardInfo::BOARD_HEIGHT; j++)
@@ -10,7 +10,7 @@ void stackIT::Board::InitBoard()
 	}
 }
 
-void stackIT::Board::DeleteLine(int pY)
+void Board::DeleteLine(int pY)
 {
 	for (int j = pY; j > 0; j--)
 	{
@@ -21,29 +21,29 @@ void stackIT::Board::DeleteLine(int pY)
 	}
 }
 
-stackIT::Board::Board(std::shared_ptr<Pieces> pPieces, int16_t pScreenHeight)
+Board::Board(std::shared_ptr<Pieces> pPieces, int16_t pScreenHeight)
 {
 	mPieces = pPieces;
 	mScreenHeight = pScreenHeight;
 	InitBoard();
 }
 
-uint8_t stackIT::Board::GetXPosInPixels(uint8_t pPos)
+uint8_t Board::GetXPosInPixels(uint8_t pPos)
 {
 	return ((BoardInfo::BOARD_POSITION - (BoardInfo::BLOCK_SIZE * (BoardInfo::BOARD_WIDTH/2))) + (pPos * BoardInfo::BLOCK_SIZE));
 }
 
-uint8_t stackIT::Board::GetYPosInPixels(uint8_t pPos)
+uint8_t Board::GetYPosInPixels(uint8_t pPos)
 {
 	return ((mScreenHeight - (BoardInfo::BLOCK_SIZE * BoardInfo::BOARD_HEIGHT)) + (pPos * BoardInfo::BLOCK_SIZE));
 }
 
-bool stackIT::Board::IsFreeBlock(uint8_t pX, uint8_t pY) const
+bool Board::IsFreeBlock(uint8_t pX, uint8_t pY) const
 {
 	return mBoard[pX][pY] == static_cast<int>(BoardInfo::PosStatus::POS_FREE);
 }
 
-bool stackIT::Board::IsPossibleMovement(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t pRotation) const
+bool Board::IsPossibleMovement(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t pRotation) const
 {
 	// Check collision with pieces already stored in the board or the board limits
 	for (size_t i = pX, x = 0; i < pX + BoardInfo::PIECE_BLOCKS; i++, x++)
@@ -71,7 +71,7 @@ bool stackIT::Board::IsPossibleMovement(uint8_t pX, uint8_t pY, uint8_t pPiece, 
 	return true;
 }
 
-void stackIT::Board::StorePiece(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t pRotation)
+void Board::StorePiece(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t pRotation)
 {
 	for (size_t i = pX, x = 0; i < pX + BoardInfo::PIECE_BLOCKS; i++, x++)
 	{
@@ -85,7 +85,7 @@ void stackIT::Board::StorePiece(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t 
 	}
 }
 
-void stackIT::Board::DeletePossibleLines()
+void Board::DeletePossibleLines()
 {
 	for (size_t i = 0; i < BoardInfo::BOARD_HEIGHT; i++) {
 
@@ -108,7 +108,7 @@ void stackIT::Board::DeletePossibleLines()
 	}
 }
 
-bool stackIT::Board::IsGameOver() const
+bool Board::IsGameOver() const
 {
 	for (size_t i = 0; i < BoardInfo::BOARD_WIDTH; i++)
 	{

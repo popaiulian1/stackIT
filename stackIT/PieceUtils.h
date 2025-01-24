@@ -3,7 +3,7 @@
 namespace PieceUtils
 {
 	// These are the pieces that will be used in the game
-	char pieces[7/* type */][4 /* rotation */][5 /* horizontals */][5 /* verticals */] = {
+	static char mPieces[7/* type */][4 /* rotation */][5 /* horizontals */][5 /* verticals */] = {
 		// Square
 		{
 		{
@@ -233,7 +233,7 @@ namespace PieceUtils
 	// The pieces are 5x5 matrixes to allow all rotations, we need to define initial positions where they will be draw on the board
 	// so as to avoid the empty space in the matrix, rendering the pieces only from where they start.
 
-	int piecesInitialPositions[7/* type */][4 /* rotation */][2 /* x, y */] = {
+	static int mPiecesInitialPositions[7/* type */][4 /* rotation */][2 /* x, y */] = {
 		// Square
 		{
 		{-2, -3},

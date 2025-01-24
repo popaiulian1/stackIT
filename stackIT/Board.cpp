@@ -43,7 +43,7 @@ bool stackIT::Board::IsFreeBlock(uint8_t pX, uint8_t pY) const
 	return mBoard[pX][pY] == static_cast<int>(BoardInfo::PosStatus::POS_FREE);
 }
 
-bool stackIT::Board::IsPossibleMovement(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t pRotation)
+bool stackIT::Board::IsPossibleMovement(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t pRotation) const
 {
 	// Check collision with pieces already stored in the board or the board limits
 	for (size_t i = pX, x = 0; i < pX + BoardInfo::PIECE_BLOCKS; i++, x++)

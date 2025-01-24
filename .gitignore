@@ -3,6 +3,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# Allow glfw library files
+!thirdparty/GLFW/*.dll
+!thirdparty/GLFW/*.lib
+!thirdparty/GLFW/*a
+
 # User-specific files
 *.rsuser
 *.suo

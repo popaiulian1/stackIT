@@ -16,7 +16,7 @@ namespace stackIT {
 		uint8_t GetXPosInPixels(uint8_t pPos);
 		uint8_t GetYPosInPixels(uint8_t pPos);
 		bool IsFreeBlock(uint8_t pX, uint8_t pY) const;
-		bool IsPossibleMovement(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t pRotation);
+		bool IsPossibleMovement(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t pRotation) const;
 		void StorePiece(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t pRotation);
 		void DeletePossibleLines();
 		bool IsGameOver() const;

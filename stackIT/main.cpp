@@ -62,7 +62,7 @@ int main() {
 
                     // Pressing x will make the piece to fall directly to the ground, after which we store the piece and delete possible lines
                     // after which we check if the game is over and decide to create a new piece if not.
-                case GLFW_KEY_X:
+                case GLFW_KEY_Q:
                     while (mBoard->IsPossibleMovement(mGame->GetPosX(), mGame->GetPosY(), mGame->GetPiece(), mGame->GetRotation()))
                     {
                         mGame->SetPosY(mGame->GetPosY() + 1);
@@ -78,7 +78,7 @@ int main() {
                     break;
 
                     // Used to rotate the piece.
-                case GLFW_KEY_Z:
+                case GLFW_KEY_R:
                     if (mBoard->IsPossibleMovement(mGame->GetPosX(), mGame->GetPosY(), mGame->GetPiece(), (mGame->GetRotation() + 1) % 4))
                     {
                         mGame->SetRotation((mGame->GetRotation() + 1) % 4);

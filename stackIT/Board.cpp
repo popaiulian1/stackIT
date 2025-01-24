@@ -12,12 +12,19 @@ void Board::InitBoard()
 
 void Board::DeleteLine(int pY)
 {
-	for (int j = pY; j > 0; j--)
+	// Move all lines above the deleted line down by one
+	for (int y = pY; y > 0; --y)
 	{
-		for (int i = 0; i < BoardInfo::BOARD_WIDTH; i++)
+		for (int x = 0; x < BoardInfo::BOARD_WIDTH; ++x)
 		{
-			mBoard[i][j] = mBoard[i][j - 1];
+			mBoard[x][y] = mBoard[x][y - 1];
 		}
+	}
+
+	// Clear the top line
+	for (int x = 0; x < BoardInfo::BOARD_WIDTH; ++x)
+	{
+		mBoard[x][0] = static_cast<int>(BoardInfo::PosStatus::POS_FREE);
 	}
 }
 
@@ -46,9 +53,9 @@ bool Board::IsFreeBlock(int pX, int pY) const
 bool Board::IsPossibleMovement(int pX, int pY, int pPiece, int pRotation) const
 {
 	// Check collision with pieces already stored in the board or the board limits
-	for (size_t i = 0; i < BoardInfo::PIECE_BLOCKS; ++i)
+	for (int i = 0; i < BoardInfo::PIECE_BLOCKS; ++i)
 	{
-		for (size_t j = 0; j < BoardInfo::PIECE_BLOCKS; ++j)
+		for (int j = 0; j < BoardInfo::PIECE_BLOCKS; ++j)
 		{
 			int blockType = Pieces::GetBlockType(pPiece, pRotation, i, j);
 			if (blockType != 0)
@@ -75,9 +82,9 @@ bool Board::IsPossibleMovement(int pX, int pY, int pPiece, int pRotation) const
 
 void Board::StorePiece(int pX, int pY, int pPiece, int pRotation)
 {
-	for (size_t i = 0; i < BoardInfo::PIECE_BLOCKS; ++i)
+	for (int i = 0; i < BoardInfo::PIECE_BLOCKS; ++i)
 	{
-		for (size_t j = 0; j < BoardInfo::PIECE_BLOCKS; ++j)
+		for (int j = 0; j < BoardInfo::PIECE_BLOCKS; ++j)
 		{
 			int blockType = Pieces::GetBlockType(pPiece, pRotation, i, j);
 			if (blockType != 0)
@@ -90,30 +97,31 @@ void Board::StorePiece(int pX, int pY, int pPiece, int pRotation)
 
 void Board::DeletePossibleLines()
 {
-	for (size_t i = 0; i < BoardInfo::BOARD_HEIGHT; i++) {
+	for (int y = 0; y < BoardInfo::BOARD_HEIGHT; ++y)
+	{
+		bool lineComplete = true;
 
-		size_t j = 0;
-
-		while (j < BoardInfo::BOARD_WIDTH)
+		// Check if the line is complete
+		for (int x = 0; x < BoardInfo::BOARD_WIDTH; ++x)
 		{
-			// check if the line is filled
-			if (mBoard[j][i] != static_cast<int>(BoardInfo::PosStatus::POS_FILLED))
+			if (mBoard[x][y] == static_cast<int>(BoardInfo::PosStatus::POS_FREE))
 			{
+				lineComplete = false;
 				break;
 			}
-			j++;
 		}
-		// if j is equal to BOARD_WIDTH, the line is filled and needs to be deleted
-		if (j == BoardInfo::BOARD_WIDTH)
+
+		// If the line is complete, delete it
+		if (lineComplete)
 		{
-			DeleteLine(i);
+			DeleteLine(y);
 		}
 	}
 }
 
 bool Board::IsGameOver() const
 {
-	for (size_t i = 0; i < BoardInfo::BOARD_WIDTH; i++)
+	for (int i = 0; i < BoardInfo::BOARD_WIDTH; i++)
 	{
 		if (mBoard[i][0] == static_cast<int>(BoardInfo::PosStatus::POS_FILLED))
 		{

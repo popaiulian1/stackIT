@@ -7,7 +7,7 @@
 #include <chrono>
 #include <memory>
 
-constexpr uint16_t WAIT_TIME = 700; // How much time until the piece falls down in milliseconds
+constexpr long WAIT_TIME = 700; // How much time until the piece falls down in milliseconds
 
 class Game
 {

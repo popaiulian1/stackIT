@@ -1,8 +1,8 @@
 #include <iostream>
+#include <unordered_map>
 #include "Game.h"
 
 int main() {
-	
     // init io
     IO mIO;
     if (mIO.InitGraph() != 0)
@@ -19,6 +19,9 @@ int main() {
 
     unsigned long mTime1 = glfwGetTime() * 1000;
 
+    // Map to track the state of each key
+    std::unordered_map<int, bool> keyState;
+
     // Game loop
     while (!mIO.IsKeyDown(GLFW_KEY_ESCAPE)) {
         mIO.ClearScreen();
@@ -27,56 +30,68 @@ int main() {
 
         int mKey = mIO.Pollkey();
 
-        switch (mKey)
-        {
-            // Move to right.
-        case GLFW_KEY_D:
-            if (mBoard->IsPossibleMovement(mGame->GetPosX() + 1, mGame->GetPosY(), mGame->GetPiece(), mGame->GetRotation()))
-            {
-                mGame->SetPosX(mGame->GetPosX() + 1);
-            }
-            break;
+        if (mKey != -1) {
+            if (!keyState[mKey]) {
+                keyState[mKey] = true;
 
-            // Move to left.
-        case GLFW_KEY_A:
-            if (mBoard->IsPossibleMovement(mGame->GetPosX() - 1, mGame->GetPosY(), mGame->GetPiece(), mGame->GetRotation()))
-            {
-                mGame->SetPosX(mGame->GetPosX() - 1);
-            }
-            break;
+                switch (mKey)
+                {
+                    // Move to right.
+                case GLFW_KEY_D:
+                    if (mBoard->IsPossibleMovement(mGame->GetPosX() + 1, mGame->GetPosY(), mGame->GetPiece(), mGame->GetRotation()))
+                    {
+                        mGame->SetPosX(mGame->GetPosX() + 1);
+                    }
+                    break;
 
-            // Move down.
-        case GLFW_KEY_S:
-            if (mBoard->IsPossibleMovement(mGame->GetPosX(), mGame->GetPosY() + 1, mGame->GetPiece(), mGame->GetRotation()))
-            {
-                mGame->SetPosY(mGame->GetPosY() + 1);
-            }
-            break;
+                    // Move to left.
+                case GLFW_KEY_A:
+                    if (mBoard->IsPossibleMovement(mGame->GetPosX() - 1, mGame->GetPosY(), mGame->GetPiece(), mGame->GetRotation()))
+                    {
+                        mGame->SetPosX(mGame->GetPosX() - 1);
+                    }
+                    break;
 
-            // Pressing x will make the piece to fall directly to the ground, after which we store the piece and delete possible lines
-            // after which we check if the game is over and decide to create a new piece if not.
-        case GLFW_KEY_X:
-            while (mBoard->IsPossibleMovement(mGame->GetPosX(), mGame->GetPosY(), mGame->GetPiece(), mGame->GetRotation()))
-            {
-                mGame->SetPosY(mGame->GetPosY() + 1);
-            }
-            mBoard->StorePiece(mGame->GetPosX(), mGame->GetPosY() - 1, mGame->GetPiece(), mGame->GetRotation());
-            mBoard->DeletePossibleLines();
-            if (mBoard->IsGameOver())
-            {
-                std::cout << "\n\n ======= Game Over! ======= \n\n";
-                return 0;
-            }
-            mGame->CreateNewPiece();
-            break;
+                    // Move down.
+                case GLFW_KEY_S:
+                    if (mBoard->IsPossibleMovement(mGame->GetPosX(), mGame->GetPosY() + 1, mGame->GetPiece(), mGame->GetRotation()))
+                    {
+                        mGame->SetPosY(mGame->GetPosY() + 1);
+                    }
+                    break;
 
-            // Used to rotate the piece.
-        case GLFW_KEY_Z:
-            if (mBoard->IsPossibleMovement(mGame->GetPosX(), mGame->GetPosY(), mGame->GetPiece(), (mGame->GetRotation() + 1) % 4))
-            {
-                mGame->SetRotation((mGame->GetRotation() + 1) % 4);
+                    // Pressing x will make the piece to fall directly to the ground, after which we store the piece and delete possible lines
+                    // after which we check if the game is over and decide to create a new piece if not.
+                case GLFW_KEY_X:
+                    while (mBoard->IsPossibleMovement(mGame->GetPosX(), mGame->GetPosY(), mGame->GetPiece(), mGame->GetRotation()))
+                    {
+                        mGame->SetPosY(mGame->GetPosY() + 1);
+                    }
+                    mBoard->StorePiece(mGame->GetPosX(), mGame->GetPosY() - 1, mGame->GetPiece(), mGame->GetRotation());
+                    mBoard->DeletePossibleLines();
+                    if (mBoard->IsGameOver())
+                    {
+                        std::cout << "\n\n ======= Game Over! ======= \n\n";
+                        return 0;
+                    }
+                    mGame->CreateNewPiece();
+                    break;
+
+                    // Used to rotate the piece.
+                case GLFW_KEY_Z:
+                    if (mBoard->IsPossibleMovement(mGame->GetPosX(), mGame->GetPosY(), mGame->GetPiece(), (mGame->GetRotation() + 1) % 4))
+                    {
+                        mGame->SetRotation((mGame->GetRotation() + 1) % 4);
+                    }
+                    break;
+                }
             }
-            break;
+        }
+        else {
+            // Reset key states when no key is pressed
+            for (auto& key : keyState) {
+                key.second = false;
+            }
         }
 
         // Gravity works :(( -> Just when i thought i was out, they pull me back in

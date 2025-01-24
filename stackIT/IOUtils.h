@@ -2,7 +2,7 @@
 #include <cstdint>
 
 namespace IUtils {
-	static enum class Color : uint8_t {
+	static enum class Color {
 		BLACK,
 		RED,
 		GREEN,

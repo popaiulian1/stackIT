@@ -8,14 +8,14 @@ class Board
 {
 public:
 	// Constructors
-	Board(std::shared_ptr<Pieces> pPieces, int16_t pScreenHeight);
+	Board(std::shared_ptr<Pieces> pPieces, int pScreenHeight);
 
 	// Methods
-	uint8_t GetXPosInPixels(uint8_t pPos);
-	uint8_t GetYPosInPixels(uint8_t pPos);
-	bool IsFreeBlock(uint8_t pX, uint8_t pY) const;
-	bool IsPossibleMovement(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t pRotation) const;
-	void StorePiece(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t pRotation);
+	int GetXPosInPixels(int pPos);
+	int GetYPosInPixels(int pPos);
+	bool IsFreeBlock(int pX, int pY) const;
+	bool IsPossibleMovement(int pX, int pY, int pPiece, int pRotation) const;
+	void StorePiece(int pX, int pY, int pPiece, int pRotation);
 	void DeletePossibleLines();
 	bool IsGameOver() const;
 
@@ -23,7 +23,7 @@ private:
 	// Variables
 	int mBoard[BoardInfo::BOARD_WIDTH][BoardInfo::BOARD_HEIGHT];
 	std::shared_ptr<Pieces> mPieces;
-	int16_t mScreenHeight;
+	int mScreenHeight;
 
 	// Methods
 	void InitBoard();

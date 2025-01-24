@@ -28,12 +28,12 @@ void IO::ClearScreen()
 	glLoadIdentity();
 }
 
-uint16_t IO::GetScreenHeight() const
+int IO::GetScreenHeight() const
 {
 	return mScreenHeight;
 }
 
-int8_t IO::InitGraph()
+int IO::InitGraph()
 {
 	if (!glfwInit())
 	{
@@ -74,7 +74,7 @@ int8_t IO::InitGraph()
 	return 0;
 }
 
-int16_t IO::Pollkey()
+int IO::Pollkey()
 {
 	if (glfwWindowShouldClose(mWindow))
 	{
@@ -91,10 +91,10 @@ int16_t IO::Pollkey()
 	return -1;
 }
 
-int16_t IO::Getkey()
+int IO::Getkey()
 {
 	while (true) {
-		int16_t key = Pollkey();
+		int key = Pollkey();
 		if (key != -1)
 		{
 			return key;
@@ -102,7 +102,7 @@ int16_t IO::Getkey()
 	}
 }
 
-int16_t IO::IsKeyDown(int pKey)
+int IO::IsKeyDown(int pKey)
 {
 	return glfwGetKey(mWindow, pKey) == GLFW_PRESS;
 }

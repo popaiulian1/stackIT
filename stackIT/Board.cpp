@@ -21,29 +21,29 @@ void Board::DeleteLine(int pY)
 	}
 }
 
-Board::Board(std::shared_ptr<Pieces> pPieces, int16_t pScreenHeight)
+Board::Board(std::shared_ptr<Pieces> pPieces, int pScreenHeight)
 {
 	mPieces = pPieces;
 	mScreenHeight = pScreenHeight;
 	InitBoard();
 }
 
-uint8_t Board::GetXPosInPixels(uint8_t pPos)
+int Board::GetXPosInPixels(int pPos)
 {
 	return ((BoardInfo::BOARD_POSITION - (BoardInfo::BLOCK_SIZE * (BoardInfo::BOARD_WIDTH/2))) + (pPos * BoardInfo::BLOCK_SIZE));
 }
 
-uint8_t Board::GetYPosInPixels(uint8_t pPos)
+int Board::GetYPosInPixels(int pPos)
 {
 	return ((mScreenHeight - (BoardInfo::BLOCK_SIZE * BoardInfo::BOARD_HEIGHT)) + (pPos * BoardInfo::BLOCK_SIZE));
 }
 
-bool Board::IsFreeBlock(uint8_t pX, uint8_t pY) const
+bool Board::IsFreeBlock(int pX, int pY) const
 {
 	return mBoard[pX][pY] == static_cast<int>(BoardInfo::PosStatus::POS_FREE);
 }
 
-bool Board::IsPossibleMovement(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t pRotation) const
+bool Board::IsPossibleMovement(int pX, int pY, int pPiece, int pRotation) const
 {
 	// Check collision with pieces already stored in the board or the board limits
 	for (size_t i = 0; i < BoardInfo::PIECE_BLOCKS; ++i)
@@ -73,7 +73,7 @@ bool Board::IsPossibleMovement(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t p
 	return true;
 }
 
-void Board::StorePiece(uint8_t pX, uint8_t pY, uint8_t pPiece, uint8_t pRotation)
+void Board::StorePiece(int pX, int pY, int pPiece, int pRotation)
 {
 	for (size_t i = 0; i < BoardInfo::PIECE_BLOCKS; ++i)
 	{

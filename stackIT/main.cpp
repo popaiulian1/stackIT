@@ -10,7 +10,7 @@ int main() {
         return -1;
     }
 
-    const int mScreenHeight = mIO.GetScreenHeight();
+    int mScreenHeight = mIO.GetScreenHeight();
 
     // Create game
     auto mPieces = std::make_shared<Pieces>();
@@ -30,7 +30,7 @@ int main() {
         switch (mKey)
         {
             // Move to right.
-        case GLFW_KEY_RIGHT:
+        case GLFW_KEY_D:
             if (mBoard->IsPossibleMovement(mGame->GetPosX() + 1, mGame->GetPosY(), mGame->GetPiece(), mGame->GetRotation()))
             {
                 mGame->SetPosX(mGame->GetPosX() + 1);
@@ -38,7 +38,7 @@ int main() {
             break;
 
             // Move to left.
-        case GLFW_KEY_LEFT:
+        case GLFW_KEY_A:
             if (mBoard->IsPossibleMovement(mGame->GetPosX() - 1, mGame->GetPosY(), mGame->GetPiece(), mGame->GetRotation()))
             {
                 mGame->SetPosX(mGame->GetPosX() - 1);
@@ -46,7 +46,7 @@ int main() {
             break;
 
             // Move down.
-        case GLFW_KEY_DOWN:
+        case GLFW_KEY_S:
             if (mBoard->IsPossibleMovement(mGame->GetPosX(), mGame->GetPosY() + 1, mGame->GetPiece(), mGame->GetRotation()))
             {
                 mGame->SetPosY(mGame->GetPosY() + 1);

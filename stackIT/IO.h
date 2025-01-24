@@ -18,7 +18,7 @@ public:
 	int8_t InitGraph();
 	int16_t Pollkey();
 	int16_t Getkey();
-	int IsKeyDown(int pKey);
+	int16_t IsKeyDown(int pKey);
 	void UpdateScreen();
 
 private:

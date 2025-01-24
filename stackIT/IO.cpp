@@ -1,8 +1,6 @@
 #include "IO.h"
 
-IO::IO() : mWindow(nullptr), mScreenHeight(800), mScreenWidth(600)
-{
-}
+IO::IO() : mWindow(nullptr), mScreenHeight(800), mScreenWidth(600) {}
 
 IO::~IO()
 {
@@ -15,6 +13,13 @@ IO::~IO()
 
 void IO::DrawRectangle(int pX1, int pY1, int pX2, int pY2, IUtils::Color pColor)
 {
+	SetColor(pColor);
+	glBegin(GL_QUADS);
+	glVertex2i(pX1, pY1);
+	glVertex2i(pX2, pY1);
+	glVertex2i(pX2, pY2);
+	glVertex2i(pX1, pY2);
+	glEnd();
 }
 
 void IO::ClearScreen()
@@ -76,7 +81,7 @@ int16_t IO::Getkey()
 	}
 }
 
-int IO::IsKeyDown(int pKey)
+int16_t IO::IsKeyDown(int pKey)
 {
 	return glfwGetKey(mWindow, pKey) == GLFW_PRESS;
 }

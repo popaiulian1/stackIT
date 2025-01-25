@@ -5,6 +5,8 @@ Stack pieces!!
 OpenGL  
 GLEW  
 GLFW  
+stb_images  
+glm  
 
 # Keys:  
 "Q" -> drop piece to bottom  

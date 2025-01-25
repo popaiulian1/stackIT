@@ -1,6 +1,8 @@
 #include "IO.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
-IO::IO() : mWindow(nullptr), mScreenHeight(800), mScreenWidth(600) {}
+IO::IO() : mWindow(nullptr), mScreenHeight(600), mScreenWidth(600) {}
 
 IO::~IO()
 {
@@ -77,7 +79,10 @@ int IO::InitGraph()
 		return -1;
 	}
 
-	LoadFont("../thirdparty/fonts/PixelAE-Bold.ttf");
+	//LoadFont("../thirdparty/fonts/PixelAE-Bold.ttf");
+
+	// Load background image
+	LoadBackgroundImage("../thirdparty/assets/Purple_Nebula_01-1024x1024.png");
 
 	return 0;
 }
@@ -163,6 +168,44 @@ void IO::RenderText(const std::string& pText, int pX, int pY, int pSize, IUtils:
 	}
 	glBindVertexArray(0);
 	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void IO::RenderBackground()
+{
+	// Reset color -> fixes bug where the background color would be green/blue
+	glColor3f(1.0f, 1.0f, 1.0f);
+
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, backgroundTexture);
+
+	// Calculate the aspect ratio of the image
+	float imageAspectRatio = static_cast<float>(backgroundImageWidth) / backgroundImageHeight;
+	float windowAspectRatio = static_cast<float>(mScreenWidth) / mScreenHeight;
+
+	float renderWidth, renderHeight;
+	if (windowAspectRatio > imageAspectRatio) {
+		// Window is wider than the image
+		renderHeight = mScreenHeight;
+		renderWidth = renderHeight * imageAspectRatio;
+	}
+	else {
+		// Window is taller than the image
+		renderWidth = mScreenWidth;
+		renderHeight = renderWidth / imageAspectRatio;
+	}
+
+	float xOffset = (mScreenWidth - renderWidth) / 2.0f;
+	float yOffset = (mScreenHeight - renderHeight) / 2.0f;
+
+	glBegin(GL_QUADS);
+	glTexCoord2f(0.0f, 0.0f); glVertex2f(xOffset, yOffset);
+	glTexCoord2f(1.0f, 0.0f); glVertex2f(xOffset + renderWidth, yOffset);
+	glTexCoord2f(1.0f, 1.0f); glVertex2f(xOffset + renderWidth, yOffset + renderHeight);
+	glTexCoord2f(0.0f, 1.0f); glVertex2f(xOffset, yOffset + renderHeight);
+	glEnd();
+
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisable(GL_TEXTURE_2D);
 }
 
 void IO::SetColor(IUtils::Color pColor)
@@ -271,4 +314,45 @@ void IO::LoadFont(const std::string& fontPath)
 	glBindVertexArray(0);
 
 	std::cout << "Font loaded successfully" << std::endl;
+}
+
+void IO::LoadBackgroundImage(const std::string& imagePath)
+{
+	int width, height, nrChannels;
+	unsigned char* data = stbi_load(imagePath.c_str(), &width, &height, &nrChannels, 0);
+	if (!data) {
+		std::cerr << "ERROR::STB: Failed to load image" << std::endl;
+		return;
+	}
+
+	backgroundImageWidth = width;
+	backgroundImageHeight = height;
+
+	GLenum format;
+	if (nrChannels == 1)
+	{
+		format = GL_RED;
+	}
+	else if (nrChannels == 3)
+	{
+		format = GL_RGB; 
+	}
+	else if (nrChannels == 4) {
+		format = GL_RGBA; 
+	}
+	else {
+		std::cerr << "ERROR::STB: Unsupported number of channels" << std::endl;
+		stbi_image_free(data);
+		return;
+	}
+
+	glGenTextures(1, &backgroundTexture);
+	glBindTexture(GL_TEXTURE_2D, backgroundTexture);
+	glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	stbi_image_free(data);
 }

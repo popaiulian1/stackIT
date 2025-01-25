@@ -29,10 +29,11 @@ int main() {
     // Game loop
     while (!mIO.IsKeyDown(GLFW_KEY_ESCAPE)) {
         mIO.ClearScreen();
+        mIO.RenderBackground();
         mGame->DrawScene();
 
 		std::cout << "Current score = " << mScore << std::endl;
-		mIO.RenderText("Score: " + std::to_string(mScore), 200, 20, 1.0f, IUtils::Color::WHITE);
+		//mIO.RenderText("Score: " + std::to_string(mScore), 200, 20, 1.0f, IUtils::Color::WHITE);
 
         mIO.UpdateScreen();
 

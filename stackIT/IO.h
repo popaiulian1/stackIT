@@ -25,6 +25,7 @@ public:
 	int IsKeyDown(int pKey);
 	void UpdateScreen();
 	void RenderText(const std::string& pText, int pX, int pY, int pSize, IUtils::Color pColor);
+	void RenderBackground();
 
 private:
 	// Variables
@@ -32,13 +33,19 @@ private:
 	int mScreenHeight;
 	int mScreenWidth;
 
+	// === (TO DO) : implement the text rendering for scoring system ===
 	FT_Library mFT;
 	FT_Face mFace;
 	GLuint textVAO, textVBO;
 	std::map<char, IUtils::Character> mCharacters;
 
+	GLuint backgroundTexture;
+	int backgroundImageWidth;
+	int backgroundImageHeight;
+
 	// Methods
 	void SetColor(IUtils::Color pColor);
 	void LoadFont(const std::string& fontPath);
+	void LoadBackgroundImage(const std::string& imagePath);
 };
 

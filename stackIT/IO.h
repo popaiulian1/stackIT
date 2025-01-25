@@ -2,8 +2,11 @@
 
 #include "GL/glew.h"
 #include "glfw3.h"
+#include "ft2build.h"
+#include FT_FREETYPE_H
 #include "IOUtils.h"
 #include <iostream>
+#include <map>
 
 class IO
 {
@@ -21,6 +24,7 @@ public:
 	int Getkey();
 	int IsKeyDown(int pKey);
 	void UpdateScreen();
+	void RenderText(const std::string& pText, int pX, int pY, int pSize, IUtils::Color pColor);
 
 private:
 	// Variables
@@ -28,7 +32,13 @@ private:
 	int mScreenHeight;
 	int mScreenWidth;
 
+	FT_Library mFT;
+	FT_Face mFace;
+	GLuint textVAO, textVBO;
+	std::map<char, IUtils::Character> mCharacters;
+
 	// Methods
 	void SetColor(IUtils::Color pColor);
+	void LoadFont(const std::string& fontPath);
 };
 

@@ -9,7 +9,7 @@ Game::Game(std::shared_ptr<Board> board, std::shared_ptr<IO> io, std::shared_ptr
 
 void Game::DrawScene()
 {
-	std::cout << "Drawing scene" << std::endl;
+	//std::cout << "Drawing scene" << std::endl;
 	DrawBoard();
 	DrawPiece(mPosX, mPosY, mPiece, mRotation);
 	DrawPiece(mNextPosX, mNextPosY, mNextPiece, mNextRotation);
@@ -99,7 +99,7 @@ void Game::InitGame()
 
 void Game::DrawPiece(int pX, int pY, int pPiece, int pRotation)
 {
-	std::cout << "Drawing piece at (" << pX << ", " << pY << ")" << std::endl;
+	//std::cout << "Drawing piece at (" << pX << ", " << pY << ")" << std::endl;
 	for (size_t i = 0; i < BoardInfo::PIECE_BLOCKS; ++i)
 	{
 		for (size_t j = 0; j < BoardInfo::PIECE_BLOCKS; ++j)
@@ -122,7 +122,7 @@ void Game::DrawPiece(int pX, int pY, int pPiece, int pRotation)
 
 void Game::DrawBoard()
 {
-	std::cout << "Drawing board" << std::endl;
+	//std::cout << "Drawing board" << std::endl;
 	int x1 = BoardInfo::BOARD_POSITION - (BoardInfo::BLOCK_SIZE * (BoardInfo::BOARD_WIDTH / 2)) - 1;
 	int x2 = BoardInfo::BOARD_POSITION + (BoardInfo::BLOCK_SIZE * (BoardInfo::BOARD_WIDTH / 2));
 	int y = mScreenHeight - (BoardInfo::BLOCK_SIZE * BoardInfo::BOARD_HEIGHT);

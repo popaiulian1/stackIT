@@ -95,7 +95,7 @@ void Board::StorePiece(int pX, int pY, int pPiece, int pRotation)
 	}
 }
 
-void Board::DeletePossibleLines()
+void Board::DeletePossibleLines(int& pScore)
 {
 	for (int y = 0; y < BoardInfo::BOARD_HEIGHT; ++y)
 	{
@@ -114,6 +114,7 @@ void Board::DeletePossibleLines()
 		// If the line is complete, delete it
 		if (lineComplete)
 		{
+			pScore += 150;
 			DeleteLine(y);
 		}
 	}

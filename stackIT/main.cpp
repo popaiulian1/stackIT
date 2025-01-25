@@ -1,6 +1,7 @@
 #include <iostream>
 #include <unordered_map>
 #include "Game.h"
+#include <string>
 
 int main() {
     // init io
@@ -19,6 +20,9 @@ int main() {
 
     unsigned long mTime1 = glfwGetTime() * 1000;
 
+    // Adding a scoring system
+    int mScore = 0;
+
     // Map to track the state of each key
     std::unordered_map<int, bool> keyState;
 
@@ -26,6 +30,10 @@ int main() {
     while (!mIO.IsKeyDown(GLFW_KEY_ESCAPE)) {
         mIO.ClearScreen();
         mGame->DrawScene();
+
+		std::cout << "Current score = " << mScore << std::endl;
+		mIO.RenderText("Score: " + std::to_string(mScore), 200, 20, 1.0f, IUtils::Color::WHITE);
+
         mIO.UpdateScreen();
 
         int mKey = mIO.Pollkey();
@@ -68,7 +76,7 @@ int main() {
                         mGame->SetPosY(mGame->GetPosY() + 1);
                     }
                     mBoard->StorePiece(mGame->GetPosX(), mGame->GetPosY() - 1, mGame->GetPiece(), mGame->GetRotation());
-                    mBoard->DeletePossibleLines();
+                    mBoard->DeletePossibleLines(mScore);
                     if (mBoard->IsGameOver())
                     {
                         std::cout << "\n\n ======= Game Over! ======= \n\n";
@@ -103,7 +111,7 @@ int main() {
             }
             else {
                 mBoard->StorePiece(mGame->GetPosX(), mGame->GetPosY(), mGame->GetPiece(), mGame->GetRotation());
-                mBoard->DeletePossibleLines();
+                mBoard->DeletePossibleLines(mScore);
                 if (mBoard->IsGameOver())
                 {
                     std::cout << "\n\n ======= Game Over! ======= \n\n";

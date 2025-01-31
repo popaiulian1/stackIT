@@ -1,5 +1,6 @@
 # stackIT
-Stack pieces!!
+Stack pieces!!  
+![This is a screenshot of how the game looks](https://github.com/popaiulian1/stackIT/blob/main/thirdparty/assets/game%20capture.JPG)
 
 # Libraries used:
 OpenGL  

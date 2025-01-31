@@ -71,8 +71,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>..\thirdparty\GLFW\;$(IncludePath)</IncludePath>
-    <LibraryPath>..\thirdparty\GLFW\x64\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\thirdparty\GLFW;..\thirdparty\GLEW;..\thirdparty\stb;..\thirdparty\freetype-2.13.3\include;..\thirdparty\glm;$(IncludePath)</IncludePath>
+    <LibraryPath>..\thirdparty\GLFW\x64\;..\thirdparty\GLEW\x64\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>..\thirdparty\GLFW;..\thirdparty\GLEW;..\thirdparty\stb;..\thirdparty\freetype-2.13.3\include\;..\thirdparty\glm\;$(IncludePath)</IncludePath>
@@ -135,6 +135,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\thirdparty\GLEW\x64;..\thirdparty\GLFW\x64;..\thirdparty\freetype-2.13.3\objs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3dll.lib;opengl32.lib;glew32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

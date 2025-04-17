@@ -35,6 +35,3 @@ Steps to Build:
 - "A" -> move piece to left  
 - "D" -> move piece to right  
 - "S" -> move piece down  
-
-## Author:
-Implemented by: **Popa Marian-Iulian**
